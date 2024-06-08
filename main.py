@@ -1,4 +1,40 @@
-import contato, contatos_manager
+class contato():
+    def init(self, nome, telefone, email):
+        self.nome = nome
+        self.telefone = telefone
+        self.email = email
+
+class contatos_manager(contato):
+    def init(self):
+        self.contatos = []
+
+    def adicionar_contato(self, contato):
+        self.contatos.append(contato)
+        print(f'Contato {contato.nome} adicionado com sucesso!')
+
+    def listar_contatos(self):
+        if self.contatos:
+            print('Lista de Contatos:')
+            for contato in self.contatos:
+                print(f'Nome: {contato.nome}, Telefone: {contato.telefone}, Email: {contato.email}')
+        else:
+            print('Nenhum contato encontrado.')
+
+    def buscar_contato(self, nome):
+        for contato in self.contatos:
+            if contato.nome.lower() == nome.lower():
+                print(f'Contato encontrado - Nome: {contato.nome}, Telefone: {contato.telefone}, Email: {contato.email}')
+                return
+        print('Contato não encontrado.')
+
+    # aqui vamos ter as info dos contatos, abaixo:
+    def obter_detalhes_contato():
+        nome = input('Digite o nome do contato: ')
+        telefone = input('Digite o número de telefone do contato: ')
+        email = input('Digite o email do contato: ')
+        return contato(nome, telefone, email)
+
+
 
 while True:
     print('\n1 - Adicionar Contato')
@@ -8,8 +44,10 @@ while True:
 
     escolha = input('Escolha uma opção: ')
 
+    gerenciador = contatos_manager()
+
     if escolha == '1':
-        contato = obter_detalhes_contato()
+        gerenciador.obter_detalhes_contato()
         gerenciador.adicionar_contato(contato)
     elif escolha == '2':
         gerenciador.listar_contatos()
