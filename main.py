@@ -1,61 +1,53 @@
-class contato():
-    def init(self, nome, telefone, email):
-        self.nome = nome
-        self.telefone = telefone
-        self.email = email
+contatos = []
 
-class contatos_manager(contato):
-    def init(self):
-        self.contatos = []
+def adicionarcontato(nome, telefone, email):
+    contato = {'nome': nome, 'telefone': telefone, 'email': email}
+    contatos.append(contato)
+    print(f"Contato {nome} adicionado com sucesso!")
 
-    def adicionar_contato(self, contato):
-        self.contatos.append(contato)
-        print(f'Contato {contato.nome} adicionado com sucesso!')
+def listarcontatos():
+    if not contatos:
+        print("Nenhum contato encontrado.")
+        return
+    for i, contato in enumerate(contatos):
+        print(f"{i+1}. Nome: {contato['nome']}, Telefone: {contato['telefone']}, Email: {contato['email']}")
 
-    def listar_contatos(self):
-        if self.contatos:
-            print('Lista de Contatos:')
-            for contato in self.contatos:
-                print(f'Nome: {contato.nome}, Telefone: {contato.telefone}, Email: {contato.email}')
+def removercontato(indice):
+    try:
+        contato = contatos.pop(indice - 1)
+        print(f"Contato {contato['nome']} removido com sucesso!")
+    except IndexError:
+        print("Índice inválido. Tente novamente.")
+
+def main():
+    continuar = True
+    while continuar:
+        print("\nEscolha uma opção:")
+        print("1. Adicionar contato")
+        print("2. Listar contatos")
+        print("3. Remover contato")
+        print("4. Sair")
+        opcao = input("Opção: ")
+
+        if opcao == '1':
+            nome = input("Digite o nome: ")
+            telefone = input("Digite o telefone: ")
+            email = input("Digite o email: ")
+            adicionarcontato(nome, telefone, email)
+        elif opcao == '2':
+            listar_contatos()
+        elif opcao == '3':
+            listar_contatos()
+            try:
+                indice = int(input("Digite o índice do contato a remover: "))
+                remover_contato(indice)
+            except ValueError:
+                print("Índice inválido. Tente novamente.")
+        elif opcao == '4':
+            print("Saindo...")
+            continuar = False
         else:
-            print('Nenhum contato encontrado.')
+            print("Opção inválida. Tente novamente.")
 
-    def buscar_contato(self, nome):
-        for contato in self.contatos:
-            if contato.nome.lower() == nome.lower():
-                print(f'Contato encontrado - Nome: {contato.nome}, Telefone: {contato.telefone}, Email: {contato.email}')
-                return
-        print('Contato não encontrado.')
-
-    # aqui vamos ter as info dos contatos, abaixo:
-    def obter_detalhes_contato():
-        nome = input('Digite o nome do contato: ')
-        telefone = input('Digite o número de telefone do contato: ')
-        email = input('Digite o email do contato: ')
-        return contato(nome, telefone, email)
-
-
-
-while True:
-    print('\n1 - Adicionar Contato')
-    print('2 - Listar Contatos')
-    print('3 - Pesquisar Contato')
-    print('4 - Sair')
-
-    escolha = input('Escolha uma opção: ')
-
-    gerenciador = contatos_manager()
-
-    if escolha == '1':
-        gerenciador.obter_detalhes_contato()
-        gerenciador.adicionar_contato(contato)
-    elif escolha == '2':
-        gerenciador.listar_contatos()
-    elif escolha == '3':
-        nome = input('Digite o nome do contato a ser pesquisado: ')
-        gerenciador.buscar_contato(nome)
-    elif escolha == '4':
-        print('Saindo do programa...')
-        break
-    else:
-        print('Opção inválida. Por favor, escolha uma opção válida.')
+if __name == "__main":
+    main()
